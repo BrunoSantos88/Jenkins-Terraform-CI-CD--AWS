@@ -16,17 +16,6 @@ pipeline {
 
 
     stages {
-        stage('checkout') {
-            steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/BrunoSantos88/week-24-project.git"
-                        }
-                    }
-                }
-            }
-
         stage('Plan') {
             when {
                 not {
