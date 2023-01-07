@@ -1,34 +1,12 @@
 pipeline {
-    agent any
-    tools {
-       terraform 'Terraform'
-    }
-   
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    }
+   environment {
+       AWS_ACCESS_KEY_ID    = credentials('AWS_ACCESS_KEY_ID')
+       AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+   }
+   agent any
+   tools {
+      terraform 'Terraform'
 
-    stages {
-        stage('Terraform Reconfigure') {
-            steps {
-                sh 'terraform init -reconfigure'
-                
-            }
-        }
+   }
 
-
-        stage('Terraform Init') {
-            steps {
-                sh 'terraform init'
-                
-            }
-        }
-
-        stage('Apply') {
-            steps {
-          sh './terraformw apply -auto-approve'
-            }
-        }
-    }
 }
