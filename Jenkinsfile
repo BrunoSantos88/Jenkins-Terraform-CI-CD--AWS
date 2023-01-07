@@ -1,17 +1,32 @@
+
+
 pipeline {
     agent any
-
+    tools {
+       terraform 'terraform'
     }
-    environment {
-        ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
-        SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    }
-
     stages {
-            stage('TerraformInit'){
-            steps {
-                    sh "terraform init"            
-                }
+        stage('Git checkout') {
+           steps{
+                git branch: 'main', credentialsId: 'Github', url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git'
             }
         }
+        stage('terraform format check') {
+            steps{
+                sh 'terraform fmt'
+            }
+        }
+        stage('terraform Init') {
+            steps{
+                sh 'terraform init'
+            }
+        }
+        stage('terraform apply') {
+            steps{
+                sh 'terraform apply --auto-approve'
+            }
+        }
+    }
 
+    
+}
