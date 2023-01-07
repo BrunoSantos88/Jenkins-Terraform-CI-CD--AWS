@@ -9,7 +9,13 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
-    stages {
+        stages {
+        stage('Git Clone') {
+           steps{
+                git branch: 'main', url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git'
+           }
+        }
+
         stage('Terraform Init') {
             steps {
                 sh 'terraform init '
