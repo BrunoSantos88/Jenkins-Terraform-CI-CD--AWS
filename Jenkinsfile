@@ -12,14 +12,14 @@ pipeline {
     stages {
         stage('Terraform Init') {
             steps {
-                sh 'terraform init -reconfigure'
+                sh 'terraform init -migrate-state'
                 
             }
         }
 
         stage('Apply') {
             steps {
-                sh "terraform apply -migrate-state"
+                sh "terraform apply --auto-approve"
             }
         }
     }
