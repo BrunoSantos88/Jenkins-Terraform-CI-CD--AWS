@@ -1,24 +1,25 @@
 pipeline {
     agent any
-    tools {
-       terraform 'Terraform'
-    }
 
     stages {
-        stage('terraform Init') {
-            steps{
-                sh 'terraform init -reconfigure'
+        stage('Checkout') {
+            steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git']]])            
+
+          }
+        }
+        
+        stage ("terraform init") {
+            steps {
+                sh ('terraform init') 
             }
         }
-
-        stage('Terraform Apply'){
-            steps{
-                withCredentials([[
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                sh 'terraform apply --auto-approve'
-                }
-            }
+        
+        stage ("terraform Action") {
+            steps {
+                echo "Terraform action is --> ${action}"
+                sh ('terraform ${action} --auto-approve') 
+           }
         }
     }
 }
