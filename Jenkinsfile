@@ -9,14 +9,15 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
-stage('Clone repository') { 
+        stages {
+        
+    stage('Clone repository') { 
       steps { 
         script{
           checkout scm
             }
              } 
     }
-        
 
         stage('Terraform Init') {
             steps {
@@ -31,3 +32,4 @@ stage('Clone repository') {
             }
         }
     }
+}
