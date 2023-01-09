@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-       terraform 'Terraform 1.3.7'
+       terraform 'Terraform '
     }
 
     environment {
@@ -19,7 +19,7 @@ pipeline {
              } 
     }
 
-        stage('Terraform Init -upgrade') {
+        stage('Terraform Init') {
             steps {
                 sh 'terraform init '
                 
