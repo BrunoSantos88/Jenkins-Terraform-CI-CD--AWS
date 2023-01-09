@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-       terraform 'Terraform'
+       terraform 'Terraform 1.3.7'
     }
 
     environment {
@@ -9,12 +9,13 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
-        stages {
-        stage('Git Clone') {
-           steps{
-                git branch: 'main', url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git'
-           }
-        }
+        stage('Clone repository') { 
+      steps { 
+        script{
+          checkout scm
+            }
+             } 
+    }
 
         stage('Terraform Init') {
             steps {
@@ -29,4 +30,3 @@ pipeline {
             }
         }
     }
-}
