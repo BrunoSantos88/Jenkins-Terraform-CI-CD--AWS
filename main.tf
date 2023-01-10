@@ -7,7 +7,8 @@ module "networking" {
 
 #Rede cluster EKS
 resource "aws_vpc" "eks_vpc" {
-  cidr_block            = "10.0.0.0/16"
+  cidr_block   = "10.0.0.0/16"
+  public_cidrs = ["10.0.1.0/24", "10.0.2.0/24" ,"10.0.30/24"]
 
   enable_dns_hostnames  = true
   enable_dns_support    = true
