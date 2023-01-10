@@ -26,6 +26,13 @@ pipeline {
             }
         }
 
+        stage('Terraform fmt') {
+            steps {
+                sh 'terraform fmt '
+                
+            }
+        }
+
         stage('Apply') {
             steps {
           sh 'terraform apply -auto-approve'
