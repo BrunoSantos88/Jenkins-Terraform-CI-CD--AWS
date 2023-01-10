@@ -18,3 +18,8 @@ module "cluster" {
 source        = "./eksnetworking"
 
 }
+
+module "secutygroup" {
+source        = "./security-grup "
+
+}
