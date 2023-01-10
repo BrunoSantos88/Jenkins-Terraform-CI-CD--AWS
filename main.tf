@@ -4,8 +4,8 @@ module "networking" {
   public_cidrs = ["192.0.1.0/24", "192.0.2.0/24"]
 }
 
-#module "compute" {
- # source        = "./compute"
+#module "cluster" {
+ # source        = "./cluster"
  # web_sg        = module.networking.web_sg
  # public_subnet = module.networking.public_subnet
 #}
