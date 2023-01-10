@@ -8,11 +8,11 @@ module "cluster" {
  source        = "./clustereks"
 }
 
-module "iam" {
- source        = "./iam"
- }
-
 module "networking" {
 source        = "./eksnetworking"
 
+}
+
+module "eks-cluster" {
+  source = "./ekscluster"
 }
