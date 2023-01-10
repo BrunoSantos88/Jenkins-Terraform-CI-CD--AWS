@@ -1,4 +1,4 @@
-esource "aws_default_security_group" "default" {
+resource "aws_default_security_group" "default" {
   vpc_id = "vpc-05703b43456f02cad"
 
   ingress {
