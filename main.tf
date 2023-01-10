@@ -4,10 +4,6 @@ module "networking" {
   public_cidrs = ["192.0.1.0/24", "192.0.2.0/24"]
 }
 
-module "cluster" {
- source        = "./clustereks"
-}
-
 module "networking" {
 source        = "./eksnetworking"
 
