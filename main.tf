@@ -13,3 +13,8 @@ module "networking" {
 module "iam" {
  source        = "./iam"
  }
+
+module "cluster" {
+source        = "./eksnetworking"
+
+}
