@@ -35,7 +35,7 @@ resource "aws_eip" "eks_eip" {
   vpc = true
   
   tags = {
-    "Name" = format("%s-elastic-ip", var.cluster_name)
+    "Name" = "eksiop"
   }
 
 }
@@ -59,7 +59,7 @@ resource "aws_route_table" "eks_nat_rt" {
   }
 
   tags = {
-    Name = "eksnartroute"  
+    Name = "eks-natroute"  
   }
 
 }
