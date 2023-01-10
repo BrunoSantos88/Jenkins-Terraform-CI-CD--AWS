@@ -5,7 +5,7 @@ resource "aws_subnet" "eks_subnet_private_1a" {
   availability_zone = "us-east-1c"
 
   tags = {
-    Name = "eks-networking-c"
+    Name = "eks-networking-private-c"
   }
 
 }
@@ -17,7 +17,7 @@ resource "aws_subnet" "eks_subnet_private_1b" {
   availability_zone = "us-east-1d"
 
   tags = {
-    Name = "eks-networking-c"
+    Name = "eks-networking-private-d"
   }
 }
 
