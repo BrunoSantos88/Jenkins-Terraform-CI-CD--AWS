@@ -1,42 +1,23 @@
-# --- clustereks/main.tf ---
+resource "aws_eks_cluster" "example" {
+  name     = "example"
+  role_arn = aws_iam_role.example.arn
 
-data "aws_ami" "linux" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  vpc_config {
+    subnet_ids = [aws_subnet.example1.id, aws_subnet.example2.id]
   }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["amazon"]
+  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
+  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
+  depends_on = [
+    aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController,
+  ]
 }
 
-resource "aws_launch_template" "web" {
-  name_prefix            = "web"
-  image_id               = data.aws_ami.linux.id
-  instance_type          = var.web_instance_type
-  vpc_security_group_ids = [var.web_sg]
-  user_data              = filebase64("install_apache.sh")
-
-  tags = {
-    Name = "web"
-  }
+output "endpoint" {
+  value = aws_eks_cluster.example.endpoint
 }
 
-resource "aws_autoscaling_group" "web" {
-  name                = "web"
-  vpc_zone_identifier = tolist(var.public_subnet)
-  min_size            = 2
-  max_size            = 3
-  desired_capacity    = 2
-
-  launch_template {
-    id      = aws_launch_template.web.id
-    version = "$Latest"
-  }
+output "kubeconfig-certificate-authority-data" {
+  value = aws_eks_cluster.example.certificate_authority[0].data
 }
