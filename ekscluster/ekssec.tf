@@ -1,7 +1,7 @@
 resource "aws_security_group" "eks-cluster" {
   name        = "SG-eks-cluster"
 # Use your VPC here
-  vpc_id      = "vpc-05703b43456f02cad" 
+  vpc_id      = "vpc-070185fce3224b89c" 
  # Outbound Rule
   egress {                
     from_port   = 0
