@@ -19,7 +19,7 @@ resource "aws_security_group" "web-sg" {
   ingress {
     from_port   = 30000-32800
     to_port     = 30000-32800
-    protocol    = "tcp"
+    protocol    = "kubernets"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
