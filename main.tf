@@ -9,6 +9,6 @@ source        = "./eksnetworking"
 
 }
 
-#module "eks-cluster" {
- # source = "./ekscluster"
-#}
+module "eks-cluster" {
+source = "./ekscluster"
+}
