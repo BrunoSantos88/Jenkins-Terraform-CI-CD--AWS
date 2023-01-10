@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "eks_cluster" {
   name     = "terraformEKScluster"
   role_arn =  "${aws_iam_role.iam-role-eks-cluster.arn}"
-  version  = "1.19"
+  version  = "1.23"
  # Configure EKS with vpc and network settings 
   vpc_config {            
    security_group_ids = ["${aws_security_group.eks-cluster.id}"]
