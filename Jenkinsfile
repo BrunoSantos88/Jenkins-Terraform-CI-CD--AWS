@@ -19,13 +19,6 @@ pipeline {
              } 
     }
 
-        stage('Terraform Init') {
-            steps {
-                sh 'terraform init '
-                
-            }
-        }
-
         stage('Terraform fmt') {
             steps {
                 sh 'terraform fmt '
@@ -36,7 +29,11 @@ pipeline {
         stage('Apply') {
             steps {
           sh 'terraform apply -auto-approve'
+          sh 'terraform output kubeconfig > ./kubeconfig'
+          sh 'terraform output config_map_aws_auth > ./config_map_aws_auth.yaml'
+          sh 'export KUBECONFIG=./kubeconfig'
             }
         }
-    }
+        }
 }
+        

@@ -13,6 +13,6 @@ module "eks-cluster" {
 source = "./ekscluster"
 }
 
-module ".kube" {
-source = "./kube-config"
-}
+#module ".kube" {
+#source = "./kube-config"
+#}
