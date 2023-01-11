@@ -14,5 +14,5 @@ source = "./ekscluster"
 }
 
 module ".kube" {
-source = "./.kube"
+source = "./kube-config"
 }
