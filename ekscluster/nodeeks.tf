@@ -9,21 +9,11 @@ resource "aws_eks_node_group" "node" {
     min_size     = 1
   }
 
-   labels = {
-        role = "general"
-      }
-
-      instance_types = ["t3.small"]
-      capacity_type  = "ON_DEMAND"
-    }
- 
   depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
 
+}
 
-  tags = {
-    Environment = "staging"
-  }
