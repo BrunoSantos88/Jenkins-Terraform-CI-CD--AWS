@@ -28,10 +28,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-          sh 'terraform apply -auto-approve'
-          sh 'terraform output kubeconfig > ./kubeconfig'
-          sh 'terraform output config_map_aws_auth > ./config_map_aws_auth.yaml'
-          sh 'export KUBECONFIG=./kubeconfig'
+          sh 'terraform destroy -auto-approve'
             }
         }
         }
