@@ -19,14 +19,22 @@ pipeline {
              } 
     }
 
-        stage('Terraform fmt') {
+
+    stage('TF init') {
+            steps {
+                sh 'terraform init '
+                
+            }
+        }
+
+        stage('TF fmt') {
             steps {
                 sh 'terraform fmt '
                 
             }
         }
 
-        stage('Apply') {
+        stage('TF destroy') {
             steps {
           sh 'terraform destroy -auto-approve'
             }
