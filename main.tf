@@ -4,6 +4,10 @@
  # public_cidrs = ["192.0.1.0/24", "192.0.2.0/24"]
 #}
 
+#module "compute" {
+ # source       = "./compute"
+#}
+
 module "networking" {
 source        = "./eksnetworking"
 
@@ -12,7 +16,3 @@ source        = "./eksnetworking"
 module "eks-cluster" {
 source = "./ekscluster"
 }
-
-#module ".kube" {
-#source = "./kube-config"
-#}
