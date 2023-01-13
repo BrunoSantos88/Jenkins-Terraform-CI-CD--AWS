@@ -33,13 +33,13 @@ pipeline {
 
    stage('Slack Notification(Terraform Start Process)') {
             steps {
-              slackSend message: 'Agora está iniciando processo de construção da rede Publica e Privada, assim que feito, será criando o Cluster EKS na AWS!'
+              slackSend message: 'Agora terraform acabou de iniciar, está iniciando o processo de construção da rede publica,assim que terminado, será criado o Cluster EKS na AWS!'
                 }
             }
 
 
 ///INFRA iS CODE 
-    stage('TF INICIAR') {
+    stage('TF INIT') {
             steps {
                 sh 'terraform init '
                 
