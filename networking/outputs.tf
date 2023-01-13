@@ -9,5 +9,5 @@ output "web_sg" {
 }
 
 output "public_subnet" {
-  value = aws_subnet.public_subnet[*].id
+  value = aws_subnet.public_subnet
 }
