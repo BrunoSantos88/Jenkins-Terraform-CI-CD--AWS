@@ -1,10 +1,10 @@
-resource "aws_security_group" "jks-sg" {
+resource "aws_security_group" "eks-sg" {
   name = "eks-sec-grup"
-  vpc_id = aws_vpc.jks_vpc.id
+  vpc_id = aws_vpc.eks_vpc.id
   
   ingress {
-    from_port   = "8081"
-    to_port     = "8081"
+    from_port   = "30000-32800"
+    to_port     = "30000-32800"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

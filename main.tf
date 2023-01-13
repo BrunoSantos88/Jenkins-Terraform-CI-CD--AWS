@@ -12,7 +12,3 @@ module "networking" {
 source        = "./eksnetworking"
 
 }
-
-module "eks-cluster" {
-source = "./ekscluster"
-}
