@@ -8,9 +8,8 @@ resource "aws_eks_node_group" "eks-pipeline" {
     max_size     = 1
     min_size     = 1
 
-    ami_type       = "AL2_x86_64"
-    instance_types = ["t3.large"]
-    disk_size      = 50
+    instance_types = ["t3.medium"]
+
   }
 
   depends_on = [
