@@ -15,7 +15,7 @@ pipeline {
 // Stages.
   stages {   
 
-    stage('Slack Notification(Start)') {
+    stage('Slack Notification(Pipeline Start Process)') {
       steps {
         slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
 
@@ -53,9 +53,9 @@ pipeline {
             }
         }
 
-        stage('TF Appove') {
+        stage('TF Destroy') {
             steps {
-          sh 'terraform apply -auto-approve'
+          sh 'terraform destroy -auto-approve'
             }
         }
         }

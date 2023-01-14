@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "eks_cluster" {
-  name     = "terraformEKScluster"
+  name     = "ClusterEksDevOps"
   role_arn =  "${aws_iam_role.iam-role-eks-cluster.arn}"
   version  = "1.23"
  # Configure EKS with vpc and network settings 
@@ -12,5 +12,9 @@ resource "aws_eks_cluster" "eks_cluster" {
     "aws_iam_role_policy_attachment.eks-cluster-AmazonEKSClusterPolicy",
     "aws_iam_role_policy_attachment.eks-cluster-AmazonEKSServicePolicy",
    ]
+
+   tags = {
+    Name = "NodeMaster"
+  }
 }
  
