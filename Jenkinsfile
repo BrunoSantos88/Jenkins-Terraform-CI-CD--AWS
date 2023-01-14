@@ -22,13 +22,13 @@ pipeline {
 }
 }
 
-    stage('Clone repository') { 
-      steps { 
-        script{
-          checkout scm
-            }
-             } 
-    }
+    stage('GIT CLONE') {
+  steps {
+                // Get code from a GitHub repository
+    git url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git', branch: 'main',
+    credentialsId: 'jenkins-server_local'
+          }
+  }
 
 
    stage('Slack Notification(Terraform Start Process)') {
