@@ -8,7 +8,12 @@
  # source       = "./compute"
 #}
 
-module "networking" {
-source        = "./eksnetworking"
+#module "networking" {
+#source        = "./eksnetworking"
+
+#}
+
+module "Cluster-K8" {
+source        = "./Kubenetes"
 
 }
