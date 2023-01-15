@@ -12,14 +12,15 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
+// Stages.
+  stages {   
 
-stages {   
+    stage('Slack Notification(Pipeline Start Process)') {
+      steps {
+        slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
 
- //   stage('Slack Notification(Pipeline Start Process)') {
-  //    steps {
-  //      slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
-
-//}//
+}
+}
 
   stage('GIT CLONE') {
   steps {
@@ -30,11 +31,11 @@ stages {
   }
 
 
-   //stage('Slack Notification(Terraform Start Process)') {
-    //        steps {
-   //           slackSend message: 'Agora terraform acabou de iniciar, está iniciando o processo de construção da rede publica,assim que terminado, será criado o Cluster EKS na AWS!'
-   //             }
-   //         }
+   stage('Slack Notification(Terraform Start Process)') {
+            steps {
+              slackSend message: 'Agora terraform acabou de iniciar, está iniciando o processo de construção da rede publica,assim que terminado, será criado o Cluster EKS na AWS!'
+                }
+            }
 
 
 ///INFRA iS CODE 
@@ -52,32 +53,32 @@ stages {
             }
         }
 
-        stage('TF Apply') {
+        stage('TF apply') {
             steps {
           sh 'terraform apply -auto-approve'
             }
         }
         }
-}
+        
 
 // Email Notification
-  //    post {
-  //      always {
-   //         echo "Notifying build result by email"
-   //     }
-   //     success {
-   //         mail to: 'infratidevops@gmail.com',
-    //             subject: "SUCCESS: ${currentBuild.fullDisplayName}",
-   //             body: "Pipeline passou, Efetou com Sucesso"
-//
-     ///   }
-     //   failure {
-      //     mail to: 'infratidevops@gmail.com',
-       //         subject:"FAILURE: ${currentBuild.fullDisplayName}",
-       //         body: "Pipeline Falhou , verificar os parametros corretos!"
+      post {
+        always {
+            echo "Notifying build result by email"
+        }
+        success {
+            mail to: 'infratidevops@gmail.com',
+                 subject: "SUCCESS: ${currentBuild.fullDisplayName}",
+                 body: "Pipeline passou, Efetou com Sucesso"
 
-       // }
-     // }
-//}
+        }
+        failure {
+           mail to: 'infratidevops@gmail.com',
+                subject:"FAILURE: ${currentBuild.fullDisplayName}",
+                body: "Pipeline Falhou , verificar os parametros corretos!"
+
+        }
+      }
+}
 
         
