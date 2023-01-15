@@ -20,7 +20,6 @@ stages {
   //      slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
 
 //}//
-}
 
   stage('GIT CLONE') {
   steps {
@@ -59,7 +58,7 @@ stages {
             }
         }
         }
-        
+}
 
 // Email Notification
   //    post {
