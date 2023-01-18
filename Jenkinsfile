@@ -25,33 +25,26 @@ stage('Synk-GateSonar-Security') {
 			}
   }
 
-   stage('Kubernetes Datadog monitoring') {
+ //stage('Kubernetes Datadog TOKEN') {
+	//   steps {
+	//      withKubeConfig([credentialsId: 'kubelogin']) {
+		//  sh ('kubectl create secret generic datadog-secret --from-literal api-key=DATADOGTOKEN --from-literal app-key=DATADOGTOKEN')
+		//  sh ('kubectl create secret generic datadog-secret --from-literal api-key=TOKEN --from-literal app-key=GENERICOTOKEN')
+
+		//  }
+	  // }
+//}
+
+   stage('Kubernetes Datadog monitoring AGENTES') {
 	   steps {
 	      withKubeConfig([credentialsId: 'kubelogin']) {
-		  sh ('kubectl apply -f -datadog-monitoring/cluster-agent-rbac.yaml')
-          sh ('kubectl apply -f -datadog-monitoring/rbac.yaml')
-		}
-	      }
-   	}
-
-stage('Kubernetes Datadog Agent') {
-	   steps {
-	      withKubeConfig([credentialsId: 'kubelogin']) {
-		  sh ('kubectl apply -f -datadog-monitoring/datadog-agent.yaml')
-		}
-	      }
-   	}
-
-
-  stage('Kubernetes Datadog AgentCluster') {
-	   steps {
-	      withKubeConfig([credentialsId: 'kubelogin']) {
+		  sh ('kubectl apply -f cluster-agent-rbac.yaml')
+          sh ('kubectl apply -f rbac.yaml')
+		  sh ('kubectl apply -f datadog-agent.yaml')
 		  sh ('kubectl apply -f -datadog-monitoring/datadog-cluster-agent.yaml')
 		}
 	      }
    	}
-
-  
 
 }
 }
