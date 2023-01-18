@@ -1,84 +1,59 @@
 pipeline {
   agent any
-
+  
   tools { 
         ///depentencias 
-        maven 'Maven 3.5.2' 
-        terraform 'Terraform 1.3.7' 
-    }
-        environment {
-        //aws
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        maven 'MAVEN 3.5.2' 
     }
 
-// Stages.
-  stages {   
+stages {   
 
-    stage('Slack Notification(Pipeline Start Process)') {
-      steps {
-        slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
-
-}
-}
-
-  stage('GIT CLONE') {
+stage('GIT CLONE') {
   steps {
                 // Get code from a GitHub repository
-    git url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git', branch: 'main',
-    credentialsId: 'jenkins-server_local'
+    git url: 'https://github.com/BrunoSantos88/Jenkins-frontend.git', branch: 'main',
+    credentialsId: 'jenkins-aws'
           }
   }
 
+   
+stage('Synk-GateSonar-Security') {
+            steps {		
+				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+					sh 'mvn snyk:test -fn'
+				}
+			}
+  }
 
-   stage('Slack Notification(Terraform Start Process)') {
-            steps {
-              slackSend message: 'Agora terraform acabou de iniciar, está iniciando o processo de construção da rede publica,assim que terminado, será criado o Cluster EKS na AWS!'
-                }
-            }
+   stage('Kubernetes Datadog monitoring') {
+	   steps {
+	      withKubeConfig([credentialsId: 'kubelogin']) {
+		  sh ('kubectl apply -f -datadog-monitoring/cluster-agent-rbac.yaml')
+      sh ('kubectl apply -f -datadog-monitoring/rbac.yaml')
+
+      rbac.yaml
+		}
+	      }
+   	}
+
+stage('Kubernetes Datadog Agent') {
+	   steps {
+	      withKubeConfig([credentialsId: 'kubelogin']) {
+		  sh ('kubectl apply -f -datadog-monitoring/datadog-agent.yaml')
+		}
+	      }
+   	}
 
 
-///INFRA iS CODE 
-    stage('TF INIT') {
-            steps {
-                sh 'terraform init '
-                
-            }
-        }
+  stage('Kubernetes Datadog AgentCluster') {
+	   steps {
+	      withKubeConfig([credentialsId: 'kubelogin']) {
+		  sh ('kubectl apply -f -datadog-monitoring/datadog-cluster-agent.yaml')
+		}
+	      }
+   	}
 
-        stage('TF FMT') {
-            steps {
-                sh 'terraform fmt '
-                
-            }
-        }
+  
 
-        stage('TF apply') {
-            steps {
-          sh 'terraform apply -auto-approve'
-            }
-        }
-        }
-        
-
-// Email Notification
-      post {
-        always {
-            echo "Notifying build result by email"
-        }
-        success {
-            mail to: 'infratidevops@gmail.com',
-                 subject: "SUCCESS: ${currentBuild.fullDisplayName}",
-                 body: "Pipeline passou, Efetou com Sucesso"
-
-        }
-        failure {
-           mail to: 'infratidevops@gmail.com',
-                subject:"FAILURE: ${currentBuild.fullDisplayName}",
-                body: "Pipeline Falhou , verificar os parametros corretos!"
-
-        }
-      }
 }
-
-        
+}
