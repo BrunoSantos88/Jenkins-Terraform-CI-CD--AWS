@@ -29,7 +29,7 @@ stage('Synk-GateSonar-Security') {
 	   steps {
 	      withKubeConfig([credentialsId: 'kubelogin']) {
 		  sh ('kubectl apply -f -datadog-monitoring/cluster-agent-rbac.yaml')
-      sh ('kubectl apply -f -datadog-monitoring/rbac.yaml')
+          sh ('kubectl apply -f -datadog-monitoring/rbac.yaml')
 
       rbac.yaml
 		}
