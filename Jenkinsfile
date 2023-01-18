@@ -41,7 +41,7 @@ stage('Synk-GateSonar-Security') {
 		  sh ('kubectl apply -f cluster-agent-rbac.yaml')
           sh ('kubectl apply -f rbac.yaml')
 		  sh ('kubectl apply -f datadog-agent.yaml')
-		  sh ('kubectl apply -f -datadog-monitoring/datadog-cluster-agent.yaml')
+		  sh ('kubectl apply -f datadog-cluster-agent.yaml')
 		}
 	      }
    	}
