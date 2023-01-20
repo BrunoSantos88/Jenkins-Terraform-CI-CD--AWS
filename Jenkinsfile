@@ -1,9 +1,13 @@
 pipeline {
   agent any
-  
+
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
+  }
+
   tools { 
         ///depentencias 
-        maven 'MAVEN 3.5.2' 
+        maven 'Maven 3.6.3' 
     }
 
 stages {   
@@ -25,26 +29,25 @@ stage('Synk-GateSonar-Security') {
 			}
   }
 
- //stage('Kubernetes Datadog TOKEN') {
-	//   steps {
-	//      withKubeConfig([credentialsId: 'kubelogin']) {
-		//  sh ('kubectl create secret generic datadog-secret --from-literal api-key=DATADOGTOKEN --from-literal app-key=DATADOGTOKEN')
-		//  sh ('kubectl create secret generic datadog-secret --from-literal api-key=TOKEN --from-literal app-key=GENERICOTOKEN')
+///DockerProcesso
+   stage('Docker Build') {
+      steps {
+        sh 'docker build -t brunosantos88/jenkins-slave jk-dockerfile/.'
+     }
+    }
 
-		//  }
-	  // }
-//}
-
-   stage('Kubernetes Datadog monitoring AGENTES') {
-	   steps {
-	      withKubeConfig([credentialsId: 'kubelogin']) {
-		  sh ('kubectl apply -f cluster-agent-rbac.yaml')
-          sh ('kubectl apply -f rbac.yaml')
-		  sh ('kubectl apply -f datadog-agent.yaml')
-		  sh ('kubectl apply -f datadog-cluster-agent.yaml')
-		}
+   stage('Docker Login') {
+      steps {
+       sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+     }
+    }
+   
+   stage('Docker Push') {
+     steps {
+        sh 'docker push brunosantos88/jenkins-slave:latest'
+     }
+   }
 	      }
    	}
 
-}
-}
+
