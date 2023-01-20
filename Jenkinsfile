@@ -15,7 +15,7 @@ stages {
 stage('GIT CLONE') {
   steps {
                 // Get code from a GitHub repository
-    git url: 'https://github.com/BrunoSantos88/Jenkins-frontend.git', branch: 'main',
+    git url: 'https://github.com/BrunoSantos88/Jenkins-Terraform-CI-CD--AWS.git', branch: 'main',
     credentialsId: 'jenkins-aws'
           }
   }
