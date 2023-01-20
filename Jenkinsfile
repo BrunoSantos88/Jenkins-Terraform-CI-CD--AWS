@@ -47,7 +47,22 @@ stage('Synk-GateSonar-Security') {
         sh 'docker push brunosantos88/jenkins-slave:latest'
      }
    }
-	      }
-   	}
 
+stage("cloudFormation") {
+            steps {
+                script {
+                    withAWS(credentials:aws-credentials) {
+                        cfnUpdate(
+                            stack: stackName,
+                            file: "cloudFormation.yaml",
+                            params: [
+                                "uniqString=${uniqString}"
+                            ],
+                            timeoutInMinutes: 10,
+                            pollInterval: 600
+                        )
+                    }
+                }
+            }
+        }
 
