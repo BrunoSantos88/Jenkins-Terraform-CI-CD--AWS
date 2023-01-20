@@ -51,10 +51,10 @@ stage('Synk-GateSonar-Security') {
 stage("cloudFormation") {
             steps {
                 script {
-                    withAWS(credentials:aws-credentials) {
+                    withAWS(credentials: aws-credentials) {
                         cfnUpdate(
                             stack: stackName,
-                            file: "cloudFormation.yaml",
+                            file: "infra-rede-publica.yaml",
                             params: [
                                 "uniqString=${uniqString}"
                             ],
