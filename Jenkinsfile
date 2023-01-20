@@ -48,23 +48,15 @@ stage('Synk-GateSonar-Security') {
      }
    }
 
-stage("cloudFormation") {
-            steps {
-                script {
-                    withAWS(credentials: aws-credentials) {
-                        cfnUpdate(
-                            stack: stackName,
-                            file: "infra-rede-publica.yaml",
-                            params: [
-                                "uniqString=${uniqString}"
-                            ],
-                            timeoutInMinutes: 10,
-                            pollInterval: 600
-                        )
-                    }
-                }
-            }
-        }
-}
-}
+stage('Build Networking') {
+      steps{
+        script {
+          sh 'aws cloudformation deploy --template-file networking.yaml 
+           --stack-name networking '
+         }
+       }
+     }    
+   }
+ }
+
 
